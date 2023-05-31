@@ -49,7 +49,9 @@ class SyncActivity : AppCompatActivity() {
 
 
     fun downloadFile(){
-        val urlString = "https://www.boardgamegeek.com/xmlapi2/collection?username=loutre_on_fire"
+        val dbHandler = DBHandler(this, null, null, 1)
+        val username: String = dbHandler.getUserName()
+        val urlString = "https://www.boardgamegeek.com/xmlapi2/collection?username=$username"
         val xmlDirectory = File("$filesDir/XML")
         if (!xmlDirectory.exists()) xmlDirectory.mkdir()
         var fileName = "$xmlDirectory/gry.xml"
@@ -173,7 +175,4 @@ class SyncActivity : AppCompatActivity() {
         saveGames(gamesList!!)
     }
 
-    fun refreshClick(v: View){
-        downloadFile()
-    }
 }

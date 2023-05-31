@@ -21,15 +21,25 @@ class DBHandler(
             val COLUMN_YEARPUBLISHED = "yearPublished"
             val COLUMN_IMAGE = "image"
             val COLUMN_THUMBNAIL = "thumbnail"
+
+            val TABLE_DATA = "data_table"
+            val COLUMN_TYPE = "type"
+            val COLUMN_DATA = "data"
+
         }
 
     override fun onCreate(db: SQLiteDatabase) {
+        Log.d("DB", "On create")
         val CREATE_GAMES_TABLE = ("CREATE TABLE " + TABLE_GAMES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_NAME + " TEXT," + COLUMN_YEARPUBLISHED + " TEXT," + COLUMN_IMAGE + " TEXT," + COLUMN_THUMBNAIL + ")")
+        val CREATE_DATA_TABLE = ("CREATE TABLE " + TABLE_DATA + "(" + COLUMN_ID + "INTEGER PRIMARY KEY," + COLUMN_TYPE + " TEXT," + COLUMN_DATA + " TEXT)")
+        db.execSQL(CREATE_DATA_TABLE)
         db.execSQL(CREATE_GAMES_TABLE)
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_GAMES)
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA)
         onCreate(db)
     }
 
@@ -58,6 +68,7 @@ class DBHandler(
     }
 
     fun selectAll(): MutableList<GamesDB>?{
+
         var gamesList:MutableList<GamesDB>? = mutableListOf()
         var game: GamesDB? = null
 
@@ -84,6 +95,48 @@ class DBHandler(
         }
         db.close()
         return gamesList
+    }
 
+    fun createTable(){
+        Log.d("DB", "create table")
+        val db = this.writableDatabase
+        val CREATE_DATA_TABLE = ("CREATE TABLE " + TABLE_DATA + "(" + COLUMN_ID + "INTEGER PRIMARY KEY," + COLUMN_TYPE + " TEXT," + COLUMN_DATA + " TEXT)")
+        db.execSQL(CREATE_DATA_TABLE)
+    }
+
+    fun createUser(username: String){
+        val values = ContentValues()
+        values.put(COLUMN_TYPE, "user")
+        values.put(COLUMN_DATA, username)
+
+        val db = this.writableDatabase
+        db.insert(TABLE_DATA, null, values)
+        db.close()
+    }
+
+    fun getUserName(): String{
+        var username: String = ""
+        val query = "SELECT * FROM $TABLE_DATA WHERE $COLUMN_TYPE LIKE \"user\""
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()){
+            username = cursor.getString(2)
+        }
+        db.close()
+        return username
+    }
+
+    fun deleteUser(): Boolean{
+        var result = false
+        val query = "SELECT * FROM $TABLE_DATA"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        db.delete(TABLE_GAMES, null, null)
+        db.execSQL("DELETE FROM $TABLE_DATA WHERE $COLUMN_TYPE LIKE \"user\"")
+        result=true
+
+        return result
     }
 }

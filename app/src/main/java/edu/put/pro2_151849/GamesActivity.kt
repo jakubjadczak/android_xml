@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
 
+import android.database.sqlite.SQLiteDatabase
+
 class GamesActivity : AppCompatActivity() {
     var gamesList:MutableList<GamesDB>? = null
 
