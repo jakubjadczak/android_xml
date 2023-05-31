@@ -1,5 +1,6 @@
 package edu.put.pro2_151849
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -152,6 +153,15 @@ class GamesActivity : AppCompatActivity() {
 
         trDate.addView(tvSep)
         tableGames.addView(trDate, trParamsSep)
+    }
+
+    fun showMainActivity(){
+        val i = Intent(this, MainActivity::class.java)
+        startActivity(i)
+    }
+
+    fun MainClick(v: View){
+        showMainActivity()
     }
 
 }

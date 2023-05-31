@@ -12,8 +12,8 @@
         android:layout_height="69dp"
         android:layout_marginTop="170dp"
         android:ems="10"
+        android:hint="Nazwa użytkownika"
         android:inputType="textPersonName"
-        android:text="Nazwa użytkownika"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
-        android:onClick="getUsername"
+        android:onClick="getUsernameClick"
         android:text="Dalej"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
