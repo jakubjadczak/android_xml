@@ -58,7 +58,6 @@ class GamesActivity : AppCompatActivity() {
         supportActionBar!!.setTitle("Gry")
         var textSpacer: TextView? = null
         var i = 0
-        Log.d("MyApp","I am here");
 
         val dbHandler = DBHandler(this, null, null, 1)
         var listOfGame = dbHandler.selectAll()
@@ -67,13 +66,16 @@ class GamesActivity : AppCompatActivity() {
         // -1 oznacza nagłówek
         if (listOfGame != null) {
             for (row in listOfGame) {
-                Log.d("DATA: ", row.name.toString())
                 val tv = TextView(this)
                 tv.layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT)
                 tv.gravity = Gravity.LEFT
                 tv.setPadding(20, 15, 20, 15)
-                tv.setText(row?.name)
+                tv.setBackgroundColor(Color.parseColor("#f8f8f8"))
+                val name = row.name
+                val year = row.yearPublished
+                val tog = name + ", " + year
+                tv.setText(tog)
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mediumTextSize.toFloat())
 
                 val tv2 = TextView(this)
@@ -82,7 +84,9 @@ class GamesActivity : AppCompatActivity() {
                 tv2.setTextSize(TypedValue.COMPLEX_UNIT_PX, mediumTextSize.toFloat())
                 tv2.gravity = Gravity.LEFT
                 tv2.setPadding(20, 15, 20, 15)
-                tv2.setText(row?.yearPublished.toString())
+                tv2.setBackgroundColor(Color.parseColor("#ffffff"))
+                tv2.setTextColor(Color.parseColor("#000000"))
+                tv2.setText(row.yearPublished.toString())
 
                 val layCustomer = LinearLayout(this)
                 layCustomer.orientation = LinearLayout.VERTICAL
@@ -97,7 +101,8 @@ class GamesActivity : AppCompatActivity() {
 
                 tv3.gravity = Gravity.TOP
                 tv3.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize.toFloat())
-                tv3.setText(row?.thumbnail)
+                tv3.setText(row.thumbnail)
+
                 layCustomer.addView(tv3)
 
 

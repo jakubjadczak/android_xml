@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +17,9 @@ class MainActivity : AppCompatActivity() {
         if (username == ""){
             showConfigActivity()
         }
+
+        val usernameText = findViewById<TextView>(R.id.logedUsername)
+        usernameText.text = dbHandler.getUserName()
 
     }
 
@@ -43,5 +48,12 @@ class MainActivity : AppCompatActivity() {
 
     fun SyncClick(v: View){
         showSyncActivity()
+    }
+
+    fun deleteButton(v: View){
+        val dbHandler = DBHandler(this, null, null, 1)
+        dbHandler.deleteUser()
+        dbHandler.deleteAll()
+        exitProcess(0)
     }
 }

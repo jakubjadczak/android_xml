@@ -139,4 +139,40 @@ class DBHandler(
 
         return result
     }
+
+    fun createSyncDate(username: String){
+        val values = ContentValues()
+        values.put(COLUMN_TYPE, "date")
+        values.put(COLUMN_DATA, username)
+
+        val db = this.writableDatabase
+        db.insert(TABLE_DATA, null, values)
+        db.close()
+    }
+
+    fun getSyncDate(): String{
+        var username: String = ""
+        val query = "SELECT * FROM $TABLE_DATA WHERE $COLUMN_TYPE LIKE \"date\""
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()){
+            username = cursor.getString(2)
+        }
+        db.close()
+        return username
+    }
+
+    fun deleteSyncDate(): Boolean{
+        var result = false
+        val query = "SELECT * FROM $TABLE_DATA"
+        val db = this.writableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        db.delete(TABLE_GAMES, null, null)
+        db.execSQL("DELETE FROM $TABLE_DATA WHERE $COLUMN_TYPE LIKE \"date\"")
+        result=true
+
+        return result
+    }
 }
