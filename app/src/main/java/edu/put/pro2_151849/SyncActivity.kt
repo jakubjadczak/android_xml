@@ -173,6 +173,7 @@ class SyncActivity : AppCompatActivity() {
         downloadFile()
         loadData()
         saveGames(gamesList!!)
+        Toast.makeText(this, "Gry zostały synchronizowane!", Toast.LENGTH_SHORT).show()
     }
 
 }

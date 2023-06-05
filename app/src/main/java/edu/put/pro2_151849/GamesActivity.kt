@@ -74,7 +74,7 @@ class GamesActivity : AppCompatActivity() {
                 tv.setBackgroundColor(Color.parseColor("#f8f8f8"))
                 val name = row.name
                 val year = row.yearPublished
-                val tog = name + ", " + year
+                val tog = i.toString() + ". " +name + ", " + year
                 tv.setText(tog)
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mediumTextSize.toFloat())
 
